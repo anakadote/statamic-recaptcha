@@ -1,0 +1,19 @@
+{
+    "name": "anakadote/statamic-recaptcha",
+    "autoload": {
+        "psr-4": {
+            "Anakadote\\StatamicRecaptcha\\": "src"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Statamic reCAPTCHA",
+            "description": "reCAPTCHA v3 addon"
+        },
+        "laravel": {
+            "providers": [
+                "Anakadote\\StatamicRecaptcha\\ServiceProvider"
+            ]
+        }
+    }
+}

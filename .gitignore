@@ -1,0 +1,4 @@
+node_modules
+vendor
+mix-manifest.jso
+.DS_Store

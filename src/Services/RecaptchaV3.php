@@ -1,0 +1,47 @@
+<?php
+
+namespace Anakadote\StatamicRecaptcha\Services;
+    
+class RecaptchaV3
+{
+    /**
+     * Verify reCAPTCHA v3.
+     *
+     * @param  string  $token      reCAPTCHA token
+     * @param  string  $action     reCAPTCHA action
+     * @param  float   $threshold  Minimum reCAPTCHA score
+     * @return bool
+     */
+    public static function verify($token, $action, $threshold = .5)
+    {
+        $threshold = $threshold ?? .5; // In case null is provided for the threshold
+        
+        $args = array(
+            'secret'   => config('recaptcha.recaptcha_v3.secret_key'),
+            'response' => $token,
+            'remoteip' => $_SERVER['REMOTE_ADDR'],
+        );
+        $url = "https://www.google.com/recaptcha/api/siteverify?" . http_build_query($args);
+        
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        
+        $result = json_decode($output);
+        
+        if (! $result || ! $result->success) {
+            return false;
+        }
+
+        if (
+            $result->score < $threshold || 
+            $result->action != $action
+        ) {
+            return false;
+        }
+        
+        return true;
+    }
+}
