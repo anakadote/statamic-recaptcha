@@ -23,7 +23,7 @@ if (window.recaptchaV3) {
     axiosScript.src = '//cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js'
   }
 
-  // reCAPTHA is ready.
+  // reCAPTCHA is ready.
   function initRecaptcha() {
     grecaptcha.ready(function() {
       const verifyUrl = '/!/statamic-recaptcha/verify-recaptcha-v3-token'
@@ -35,7 +35,7 @@ if (window.recaptchaV3) {
 
           axios.post(verifyUrl, {token: token, action: 'pageload/' + window.recaptchaV3.action})
             .then(function(response) {
-              
+
               // Attach the reCAPTCHA token and action to each form.
               for (let i = 0; i < forms.length; ++i) {
                 grecaptcha.execute(window.recaptchaV3.siteKey, {action: 'formsubmission/' + window.recaptchaV3.action})

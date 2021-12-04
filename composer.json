@@ -7,8 +7,8 @@
     },
     "extra": {
         "statamic": {
-            "name": "Statamic reCAPTCHA",
-            "description": "reCAPTCHA v3 addon"
+            "name": "Statamic reCAPTCHA (v3 and v2)",
+            "description": "A reCAPTCHA v3 and v2 addon."
         },
         "laravel": {
             "providers": [

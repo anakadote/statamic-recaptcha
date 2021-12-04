@@ -14,11 +14,12 @@ class ServiceProvider extends AddonServiceProvider
 
     protected $scripts = [
         __DIR__ . '/../resources/js/recaptcha-v3.js',
+        __DIR__ . '/../resources/js/recaptcha-v2.js',
     ];
 
     protected $listen = [
         'Statamic\Events\FormSubmitted' => [
-            'Anakadote\StatamicRecaptcha\Listeners\VerifyRecaptchaV3',
+            'Anakadote\StatamicRecaptcha\Listeners\VerifyRecaptcha',
         ],
     ];
 
