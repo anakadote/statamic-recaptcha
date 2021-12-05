@@ -30,8 +30,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | The default is the checkbox captcha, for which you can set the size to 
-    | either "normal" or "compact." For the invisible reCAPTCHA, set the size 
-    | to "invisible".
+    | either "normal" or "compact." To enable the invisible reCAPTCHA, set the 
+    | size to "invisible".
     |
     */
     'recaptcha_v2' => [
@@ -41,6 +41,20 @@ return [
         'theme' => 'light', // "light" or "dark"
         'tabindex' => 0,
         'error_message' => 'You did not prove that you are not a robot.',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Excluded Forms
+    |--------------------------------------------------------------------------
+    |
+    | You can exclude certain forms from reCAPTCHA validation by adding its
+    | handle below. For reCAPTCHA v3 you'll also need to add the CSS class 
+    | "nocaptcha" to the <form> element.
+    |
+    */
+    'exclusions' => [
+        // 'contact_us',
     ],
 
 ];

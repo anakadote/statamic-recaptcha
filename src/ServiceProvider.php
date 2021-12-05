@@ -27,7 +27,7 @@ class ServiceProvider extends AddonServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../config/recaptcha.php' => config_path('recaptcha.php'),
-        ]);
+        ], 'statamic-recaptcha');
 
         $this->registerActionRoutes(function () {
             Route::post('verify-recaptcha-v3-token', 'RecaptchaController@verifyV3Token');

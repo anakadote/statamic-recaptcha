@@ -18,6 +18,11 @@ class VerifyRecaptcha
      */
     public function handle(FormSubmitted $event)
     {   
+        // Is the form excluded from validation?
+        if (in_array($event->form->form->handle(), config('recaptcha.exclusions', []))) {
+            return true;
+        }
+
         switch (config('recaptcha.recaptcha_version')) {
 
             // v3
@@ -30,17 +35,8 @@ class VerifyRecaptcha
                 }
                 break;
 
-            // v2 Checkbox
-            case '2-checkbox':
-                $response = request()->input('g-recaptcha-response');
-
-                if (! RecaptchaV2::verify($response)) {
-                    throw ValidationException::withMessages([config('recaptcha.recaptcha_v2.error_message')]);
-                }
-                break;
-
-            // v2 Invisible
-            case '2-invisible':
+            // v2
+            case '2':
                 $response = request()->input('g-recaptcha-response');
 
                 if (! RecaptchaV2::verify($response)) {
