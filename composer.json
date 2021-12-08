@@ -1,5 +1,12 @@
 {
     "name": "anakadote/statamic-recaptcha",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Taylor Collins",
+            "homepage": "https://endif.io"
+        }  
+    ],
     "autoload": {
         "psr-4": {
             "Anakadote\\StatamicRecaptcha\\": "src"
