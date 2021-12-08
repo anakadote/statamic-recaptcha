@@ -38,6 +38,16 @@ class Recaptcha extends Tags
     }
 
     /**
+     * Google reCAPTCHA Terms of Service text.
+     */
+    public function terms()
+    {
+        $version = config('recaptcha.recaptcha_version');
+
+        return config('recaptcha.recaptcha_v' . $version . '.terms');
+    }
+
+    /**
      * v3 script tag for footer.
      */
     protected function v3()

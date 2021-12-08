@@ -6,7 +6,7 @@ Statamic reCAPTCHA is a Statamic addon that integrates Google reCAPTCHA **v3** o
 
 ## Installation
 
-You can search for this addon in the `Tools > Addons` section of the Statamic control panel and click **install**, or run the following command from your project root:
+Run the following command from your project root:
 ``` bash
 composer require anakadote/statamic-recaptcha
 ```
@@ -43,6 +43,14 @@ For example:
         {{ recaptcha }}
     </body>
 </html>
+```
+
+# reCAPTCHa Terms of Service
+If you use reCAPTCHA v3 or reCAPTCHA v2 Invisible, you agreed on reCAPTCHA's website to explicitly inform visitors to your site that you have implemented reCAPTCHA on your site and that their use of reCAPTCHA is subject to the Google [Privacy Policy](https://www.google.com/policies/privacy/) and [Terms of Use](https://www.google.com/policies/terms/).
+
+You can use the following tag to output some default language on your website, for example, next to each for, or in the footer of your website (it can be changed in your published config file):
+```php
+{{ recaptcha:terms }}
 ```
 
 **For reCAPTCHA v3, that’s it!** For v2, read on...
