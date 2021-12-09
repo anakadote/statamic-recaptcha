@@ -32,7 +32,7 @@ RECAPTCHA_V2_SECRET_KEY=[YOUR KEY HERE]
 
 > NOTE: If you’re using reCAPTCHA v3 then you’ll want to set the RECAPTCHA_V3_THRESHOLD value in your .env as well, as seen above. A reasonable default of .5 is already set for you. This value is used to determine if submissions should be treated as spam or not. reCAPTCHA v3 returns a score (1.0 is very likely a good interaction, 0.0 is very likely a bot), so if your RECAPTCHA_V3_THRESHOLD value is .5, then any submission that reCAPTCHA scores below .5 will be treated as spam, and will not be saved. So, for example, to be more lenient, you may want to set your RECAPTCHA_V3_THRESHOLD value to .3
 
-Add the following tag to your master layout, right before the closing </body> tag:
+Add the following tag to your master layout, right before the closing `</body>` tag:
 
 ```html
 {{ recaptcha }}
@@ -45,15 +45,16 @@ For example:
 </html>
 ```
 
-# reCAPTCHa Terms of Service
+## reCAPTCHa Terms of Service
 If you use reCAPTCHA v3 or reCAPTCHA v2 Invisible, you agreed on reCAPTCHA's website to explicitly inform visitors to your site that you have implemented reCAPTCHA on your site and that their use of reCAPTCHA is subject to the Google [Privacy Policy](https://www.google.com/policies/privacy/) and [Terms of Use](https://www.google.com/policies/terms/).
 
-You can use the following tag to output some default language on your website, for example, next to each for, or in the footer of your website (it can be changed in your published config file):
+You can use the following tag to output some default language on your website. For example, include it next to each form or in the footer of your website (the language can be changed in your published config file):
 ```php
-{{ recaptcha:terms }}
+{{ recaptcha:terms }
 ```
 
-**For reCAPTCHA v3, that’s it!** For v2, read on...
+**For reCAPTCHA v3, that’s it!** For v2, read on...  
+
 
 ## reCAPTCHA v2 - Additional Steps Required
 ### Checkbox Captcha (v2)
@@ -85,9 +86,9 @@ For the **invisible** version of reCAPTCHA v2, you’ll just need to set the rec
 ],
 ```
 
-# Form Exclusions
+## Form Exclusions
 
-> To **exclude** a form from reCAPTCHA validation, add the CSS class "nocaptcha" to the form element, and add its handle to the "exclusions" array in the published config/recaptcha.php file. For example:
+To **exclude** a form from reCAPTCHA validation, add the CSS class "nocaptcha" to the form element, and add its handle to the "exclusions" array in the published config/recaptcha.php file. For example:
 ```html
 {{ form:contact_us class="nocaptcha" }}
 ```
