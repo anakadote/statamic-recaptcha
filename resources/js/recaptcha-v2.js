@@ -5,7 +5,7 @@ if (window.recaptchaV2) {
     window.recaptchaV2.siteKey == 'undefined' ||
     window.recaptchaV2.siteKey == ''
   ) {
-    console.log('A RECAPTCHA_V2_SITE_KEY has not be set in .env')
+    console.log('A RECAPTCHA_V2_SITE_KEY has not been set in .env')
   }
 
   // reCAPTCHA v2
