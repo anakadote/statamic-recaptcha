@@ -45,12 +45,12 @@ For example:
 </html>
 ```
 
-## reCAPTCHa Terms of Service
+## reCAPTCHA Terms of Service
 If you use reCAPTCHA v3 or reCAPTCHA v2 Invisible, you agreed on reCAPTCHA's website to explicitly inform visitors to your site that you have implemented reCAPTCHA on your site and that their use of reCAPTCHA is subject to the Google [Privacy Policy](https://www.google.com/policies/privacy/) and [Terms of Use](https://www.google.com/policies/terms/).
 
 You can use the following tag to output some default language on your website. For example, include it next to each form or in the footer of your website (the language can be changed in your published config file):
 ```php
-{{ recaptcha:terms }
+{{ recaptcha:terms }}
 ```
 
 **For reCAPTCHA v3, that’s it!** For v2, read on...  
