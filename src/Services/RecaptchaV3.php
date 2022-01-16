@@ -14,21 +14,22 @@ class RecaptchaV3
      */
     public static function verify($token, $action, $threshold = .5)
     {
-        $threshold = $threshold ?? .5; // In case null is provided for the threshold
-        
-        $args = array(
+        $threshold = $threshold ?? .5; // In case null is provided for the threshold.
+
+        $args = [
             'secret'   => config('recaptcha.recaptcha_v3.secret_key'),
             'response' => $token,
-            'remoteip' => $_SERVER['REMOTE_ADDR'],
-        );
-        $url = "https://www.google.com/recaptcha/api/siteverify?" . http_build_query($args);
-        
+            'remoteip' => $_SERVER['REMOTE_ADDR'] ?? null,
+        ];
+
+        $url = 'https://www.google.com/recaptcha/api/siteverify?' . http_build_query($args);
+
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_POST, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
-        
+
         $result = json_decode($output);
         
         if (! $result || ! $result->success) {
@@ -41,7 +42,7 @@ class RecaptchaV3
         ) {
             return false;
         }
-        
+
         return true;
     }
 }

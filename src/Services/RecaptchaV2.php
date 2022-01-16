@@ -18,20 +18,20 @@ class RecaptchaV2
             'remoteip' => $_SERVER['REMOTE_ADDR'] ?? null,
         ];
 
-        $url = "https://www.google.com/recaptcha/api/siteverify?" . http_build_query($args);
-        
+        $url = 'https://www.google.com/recaptcha/api/siteverify?' . http_build_query($args);
+
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_POST, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
-        
+
         $result = json_decode($output);
-        
+
         if ($result->success) {
             return true;
         }
-        
+
         return false;
     }
 }

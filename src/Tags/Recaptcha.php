@@ -22,7 +22,7 @@ class Recaptcha extends Tags
             return $this->v2();
         }
 
-        throw new Exception('reCAPTCHA version not set correct in config/recaptha.php');
+        throw new Exception('reCAPTCHA version not set correctly in config/recaptcha.php');
     }
 
     /**
