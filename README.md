@@ -11,9 +11,15 @@ Run the following command from your project root:
 composer require anakadote/statamic-recaptcha
 ```
 
-Publish the assets and config file *(to config/recaptcha.php)*:
+Publish the assets and config file (to `config/recaptcha.php`):
 ```bash
 php artisan vendor:publish --tag=statamic-recaptcha
+```
+
+Set your reCAPTCHA version in the published `config/recaptcha.php` file (default is set to version 3):
+```php
+...
+'recaptcha_version' => 3,
 ```
 
 Add your [reCAPTCHA keys](https://www.google.com/recaptcha/admin/) to your [.env](https://statamic.dev/configuration) file:

@@ -24,29 +24,33 @@ if (window.recaptchaV2) {
 
       // Invisible
       if (window.recaptchaV2.size == 'invisible') {
-        grecaptcha.render(forms[i].querySelector('button[type="submit"]'), {
-          sitekey: window.recaptchaV2.siteKey,
-          size: 'invisible',
-          callback: function(token) {
-            forms[i].querySelector('button[type="submit"]').disabled = true
+        if (forms[i].querySelector('button[type="submit"]')) {
+          grecaptcha.render(forms[i].querySelector('button[type="submit"]'), {
+            sitekey: window.recaptchaV2.siteKey,
+            size: 'invisible',
+            callback: function(token) {
+              forms[i].querySelector('button[type="submit"]').disabled = true
 
-            const tokenInput = document.createElement('input')
-            tokenInput.type = 'hidden'
-            tokenInput.name = 'g-recaptcha-response'
-            tokenInput.value = token
-            forms[i].appendChild(tokenInput)
-            forms[i].submit()
-          }
-        })
+              const tokenInput = document.createElement('input')
+              tokenInput.type = 'hidden'
+              tokenInput.name = 'g-recaptcha-response'
+              tokenInput.value = token
+              forms[i].appendChild(tokenInput)
+              forms[i].submit()
+            }
+          })
+        }
 
       // Checkbox
       } else {
-        grecaptcha.render(forms[i].querySelector('.g-recaptcha'), {
-          sitekey: window.recaptchaV2.siteKey,
-          theme: window.recaptchaV2.theme || 'light',
-          size: window.recaptchaV2.size || 'normal',
-          tabindex: window.recaptchaV2.tabindex || 0
-        })
+        if (forms[i].querySelector('.g-recaptcha')) {
+          grecaptcha.render(forms[i].querySelector('.g-recaptcha'), {
+            sitekey: window.recaptchaV2.siteKey,
+            theme: window.recaptchaV2.theme || 'light',
+            size: window.recaptchaV2.size || 'normal',
+            tabindex: window.recaptchaV2.tabindex || 0
+          })
+        }
       }
     }
   }
