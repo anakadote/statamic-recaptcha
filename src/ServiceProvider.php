@@ -25,9 +25,12 @@ class ServiceProvider extends AddonServiceProvider
 
     public function bootAddon()
     {
-        $this->publishes([
-            __DIR__ . '/../config/recaptcha.php' => config_path('recaptcha.php'),
-        ], 'statamic-recaptcha');
+        // Only publish the config file if it doesn't already exist.
+        if (! file_exists(config_path('recaptcha.php'))) {
+            $this->publishes([
+                __DIR__ . '/../config/recaptcha.php' => config_path('recaptcha.php'),
+            ], 'statamic-recaptcha');
+        }
 
         $this->registerActionRoutes(function () {
             Route::post('verify-recaptcha-v3-token', 'RecaptchaController@verifyV3Token');
