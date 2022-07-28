@@ -18,7 +18,7 @@ class RecaptchaController extends Controller
     {        
         if (! RecaptchaV3::verify($request->input('token'), $request->input('action'), config('recaptcha.recaptcha_v3.threshold'))) {
             return response([
-                'error' => config('recaptcha.recaptcha_v3.error_message'),
+                'error' => __('recaptcha::recaptcha.recaptcha_v3_error_message'),
             ], 401);
         }
         

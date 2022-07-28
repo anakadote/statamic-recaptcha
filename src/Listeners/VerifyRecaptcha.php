@@ -31,7 +31,7 @@ class VerifyRecaptcha
                 $action = request()->captcha_action;
 
                 if (! RecaptchaV3::verify($token, $action, config('recaptcha.recaptcha_v3.threshold'))) {
-                    throw ValidationException::withMessages([config('recaptcha.recaptcha_v3.error_message')]);
+                    throw ValidationException::withMessages([__('recaptcha::recaptcha.recaptcha_v3_error_message')]);
                 }
                 break;
 
@@ -40,7 +40,7 @@ class VerifyRecaptcha
                 $response = request()->input('g-recaptcha-response');
 
                 if (! RecaptchaV2::verify($response)) {
-                    throw ValidationException::withMessages([config('recaptcha.recaptcha_v2.error_message')]);
+                    throw ValidationException::withMessages([__('recaptcha::recaptcha.recaptcha_v2_error_message')]);
                 }
                 break;
             

@@ -32,6 +32,8 @@ class ServiceProvider extends AddonServiceProvider
             ], 'statamic-recaptcha');
         }
 
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'recaptcha');
+
         $this->registerActionRoutes(function () {
             Route::post('verify-recaptcha-v3-token', 'RecaptchaController@verifyV3Token');
         });

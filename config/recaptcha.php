@@ -21,8 +21,6 @@ return [
         'site_key' => env('RECAPTCHA_V3_SITE_KEY'),
         'secret_key' => env('RECAPTCHA_V3_SECRET_KEY'),
         'threshold' => env('RECAPTCHA_V3_THRESHOLD', .5),
-        'error_message' => 'Sorry, but you look like a robot.',
-        'terms' => 'This website has implemented reCAPTCHA v3 and your use of reCAPTCHA v3 is subject to the <a href="https://www.google.com/policies/privacy/" target="_blank">Google Privacy Policy</a> and <a href="https://www.google.com/policies/terms/" target="_blank">Terms of Use</a>.',
     ],
 
     /*
@@ -41,8 +39,6 @@ return [
         'size' => 'normal', // "normal", "compact", or "invisible"
         'theme' => 'light', // "light" or "dark"
         'tabindex' => 0,
-        'error_message' => 'You did not prove that you are not a robot.',
-        'terms' => 'This website has implemented reCAPTCHA v2 and your use of reCAPTCHA v2 is subject to the <a href="https://www.google.com/policies/privacy/" target="_blank">Google Privacy Policy</a> and <a href="https://www.google.com/policies/terms/" target="_blank">Terms of Use</a>.',
     ],
 
     /*
