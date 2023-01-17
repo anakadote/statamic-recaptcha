@@ -53,7 +53,7 @@ class Recaptcha extends Tags
     protected function v3()
     {
         $siteKey = config('recaptcha.recaptcha_v3.site_key');
-        $action = str_replace('-', '_', request()->path());
+        $action = e(str_replace('-', '_', request()->path()));
 
         return <<<SCRIPT
             <script type="text/javascript">
