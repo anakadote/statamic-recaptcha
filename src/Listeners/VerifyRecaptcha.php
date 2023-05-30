@@ -17,9 +17,9 @@ class VerifyRecaptcha
      * @return void
      */
     public function handle(FormSubmitted $event)
-    {   
+    {
         // Is the form excluded from validation?
-        if (in_array($event->form->form->handle(), config('recaptcha.exclusions', []))) {
+        if (in_array($event->submission->form->handle(), config('recaptcha.exclusions', []))) {
             return true;
         }
 
@@ -43,7 +43,7 @@ class VerifyRecaptcha
                     throw ValidationException::withMessages([config('recaptcha.recaptcha_v2.error_message')]);
                 }
                 break;
-            
+
             default:
                 throw ValidationException::withMessages(['reCAPTCHA version not set correctly in config/recaptcha.php']);
         }

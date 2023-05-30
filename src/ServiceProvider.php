@@ -33,7 +33,7 @@ class ServiceProvider extends AddonServiceProvider
         }
 
         $this->registerActionRoutes(function () {
-            Route::post('verify-recaptcha-v3-token', 'RecaptchaController@verifyV3Token');
+            Route::post('verify-recaptcha-v3-token', 'Anakadote\StatamicRecaptcha\Http\Controllers\RecaptchaController@verifyV3Token');
         });
     }
 }
