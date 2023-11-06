@@ -31,7 +31,7 @@ class RecaptchaV3
         curl_close($ch);
 
         $result = json_decode($output);
-        
+
         if (! $result || ! $result->success) {
             return false;
         }
