@@ -2,6 +2,8 @@
 
 namespace Anakadote\StatamicRecaptcha;
 
+use Anakadote\StatamicRecaptcha\Http\Controllers\RecaptchaController;
+use Anakadote\StatamicRecaptcha\Listeners\VerifyRecaptcha;
 use Anakadote\StatamicRecaptcha\Tags\Recaptcha;
 use Illuminate\Support\Facades\Route;
 use Statamic\Providers\AddonServiceProvider;
@@ -19,7 +21,7 @@ class ServiceProvider extends AddonServiceProvider
 
     protected $listen = [
         'Statamic\Events\FormSubmitted' => [
-            'Anakadote\StatamicRecaptcha\Listeners\VerifyRecaptcha',
+            VerifyRecaptcha::class,
         ],
     ];
 
@@ -33,7 +35,7 @@ class ServiceProvider extends AddonServiceProvider
         }
 
         $this->registerActionRoutes(function () {
-            Route::post('verify-recaptcha-v3-token', 'Anakadote\StatamicRecaptcha\Http\Controllers\RecaptchaController@verifyV3Token');
+            Route::post('verify-recaptcha-v3-token', [RecaptchaController::class, 'verifyV3Token']);
         });
     }
 }
