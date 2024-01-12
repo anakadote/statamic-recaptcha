@@ -3,10 +3,10 @@
 namespace Anakadote\StatamicRecaptcha\Http\Controllers;
 
 use Anakadote\StatamicRecaptcha\Services\RecaptchaV3;
-use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 
-class RecaptchaController extends BaseController
+class RecaptchaController extends Controller
 {
     /**
      * Verify a reCAPTCHA v3 token and action.
