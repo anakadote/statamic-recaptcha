@@ -3,8 +3,8 @@
 namespace Anakadote\StatamicRecaptcha\Http\Controllers;
 
 use Anakadote\StatamicRecaptcha\Services\RecaptchaV3;
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class RecaptchaController extends Controller
 {
