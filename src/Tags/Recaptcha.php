@@ -44,7 +44,7 @@ class Recaptcha extends Tags
     {
         $version = config('recaptcha.recaptcha_version');
 
-        return config('recaptcha.recaptcha_v' . $version . '.terms');
+        return __('recaptcha::recaptcha.recaptcha_v' . $version . '_terms');
     }
 
     /**
