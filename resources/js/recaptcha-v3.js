@@ -63,7 +63,7 @@ if (window.recaptchaV3) {
                 errorMessage = document.createElement('div')
                 errorMessage.className = 'alert alert-danger p-2 rounded bg-red-500'
                 errorMessage.setAttribute('role', 'alert')
-                errorMessage.innerHTML = error.response.data.error || 'Sorry, but you look like a robot.'
+                errorMessage.innerHTML = error.response?.data?.error || 'Sorry, but you look like a robot.'
 
                 forms[i].parentNode.replaceChild(errorMessage, forms[i])
               }
