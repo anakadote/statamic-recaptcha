@@ -20,7 +20,7 @@ if (window.recaptchaV3) {
     const axiosScript = document.createElement('script')
     document.head.appendChild(axiosScript)
     axiosScript.type = 'text/javascript'
-    axiosScript.src = '//cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js'
+    axiosScript.src = '//cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js'
   }
 
   // reCAPTCHA is ready.
