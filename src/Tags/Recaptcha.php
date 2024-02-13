@@ -54,12 +54,14 @@ class Recaptcha extends Tags
     {
         $siteKey = config('recaptcha.recaptcha_v3.site_key');
         $action = e(str_replace('-', '_', request()->path()));
+        $verifyOnPageLoad = config('recaptcha.recaptcha_v3.verify_on_page_load', true) ? 'true' : 'false';
 
         return <<<SCRIPT
             <script type="text/javascript">
-              window.recaptchaV3 = {}
-              window.recaptchaV3.siteKey = '{$siteKey}'
-              window.recaptchaV3.action = '{$action}'
+              window.recaptchaV3 = {};
+              window.recaptchaV3.siteKey = '{$siteKey}';
+              window.recaptchaV3.action = '{$action}';
+              window.recaptchaV3.verifyOnPageLoad = {$verifyOnPageLoad};
             </script>
             <script src="/vendor/statamic-recaptcha/js/recaptcha-v3.js"></script>
         SCRIPT;
@@ -79,9 +81,9 @@ class Recaptcha extends Tags
         if ($size == 'invisible') {
             return <<<SCRIPT
                 <script type="text/javascript">
-                  window.recaptchaV2 = {}
-                  window.recaptchaV2.siteKey = '{$siteKey}'
-                  window.recaptchaV2.size = 'invisible'
+                  window.recaptchaV2 = {};
+                  window.recaptchaV2.siteKey = '{$siteKey}';
+                  window.recaptchaV2.size = 'invisible';
                 </script>
                 <script src="/vendor/statamic-recaptcha/js/recaptcha-v2.js"></script>
             SCRIPT;
@@ -90,11 +92,11 @@ class Recaptcha extends Tags
         } else {
             return <<<SCRIPT
                 <script type="text/javascript">
-                  window.recaptchaV2 = {}
-                  window.recaptchaV2.siteKey = '{$siteKey}'
-                  window.recaptchaV2.theme = '{$theme}'
-                  window.recaptchaV2.size = '{$size}'
-                  window.recaptchaV2.tabindex = {$tabindex}
+                  window.recaptchaV2 = {};
+                  window.recaptchaV2.siteKey = '{$siteKey}';
+                  window.recaptchaV2.theme = '{$theme}';
+                  window.recaptchaV2.size = '{$size}';
+                  window.recaptchaV2.tabindex = {$tabindex};
                 </script>
                 <script src="/vendor/statamic-recaptcha/js/recaptcha-v2.js"></script>
             SCRIPT;
