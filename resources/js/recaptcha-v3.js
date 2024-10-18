@@ -20,7 +20,7 @@ if (window.recaptchaV3) {
     const axiosScript = document.createElement('script')
     document.head.appendChild(axiosScript)
     axiosScript.type = 'text/javascript'
-    axiosScript.src = '//cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js'
+    axiosScript.src = '//cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js'
   }
 
   // reCAPTCHA is ready.
@@ -28,47 +28,57 @@ if (window.recaptchaV3) {
     grecaptcha.ready(function() {
       const verifyUrl = '/!/statamic-recaptcha/verify-recaptcha-v3-token'
 
-      // Verify on load, and remove forms from the DOM if the verification failed.
-      grecaptcha.execute(window.recaptchaV3.siteKey, {action: 'pageload/' + window.recaptchaV3.action})
-        .then(function(token) {
-          const forms = document.querySelectorAll('form:not(.nocaptcha)')
+      if (! window.recaptchaV3.verifyOnPageLoad) {
+        attachRecaptchaToForms()
 
-          axios.post(verifyUrl, {token: token, action: 'pageload/' + window.recaptchaV3.action})
-            .then(function(response) {
+      // Verify on page load, and remove forms from the DOM if the verification failed.
+      } else {
+        grecaptcha.execute(window.recaptchaV3.siteKey, {action: 'pageload/' + window.recaptchaV3.action})
+          .then(function(token) {
 
-              // Attach the reCAPTCHA token and action to each form.
-              for (let i = 0; i < forms.length; ++i) {
-                grecaptcha.execute(window.recaptchaV3.siteKey, {action: 'formsubmission/' + window.recaptchaV3.action})
-                  .then(function(token) {
+            axios.post(verifyUrl, {token: token, action: 'pageload/' + window.recaptchaV3.action})
+              .then(function(response) {
+                attachRecaptchaToForms()
+              })
+              .catch(function(error) {
+                const forms = document.querySelectorAll('form:not(.nocaptcha)')
+                let errorMessage
 
-                    const tokenInput = document.createElement('input')
-                    tokenInput.type = 'hidden'
-                    tokenInput.name = 'captcha_token'
-                    tokenInput.value = token
-                    forms[i].appendChild(tokenInput)
+                // Remove forms from the DOM and replace with an error message.
+                for (let i = 0; i < forms.length; ++i) {
+                  errorMessage = document.createElement('div')
+                  errorMessage.className = 'alert alert-danger p-2 rounded bg-red-500'
+                  errorMessage.setAttribute('role', 'alert')
+                  errorMessage.innerHTML = error.response?.data?.error || 'Sorry, but you look like a robot.'
 
-                    const actionInput = document.createElement('input')
-                    actionInput.type = 'hidden'
-                    actionInput.name = 'captcha_action'
-                    actionInput.value = 'formsubmission/' + window.recaptchaV3.action
-                    forms[i].appendChild(actionInput)
-                  })
-              }
-            })
-            .catch(function(error) {
-              let errorMessage
-
-              // Remove forms from the DOM and replace with an error message.
-              for (let i = 0; i < forms.length; ++i) {
-                errorMessage = document.createElement('div')
-                errorMessage.className = 'alert alert-danger p-2 rounded bg-red-500'
-                errorMessage.setAttribute('role', 'alert')
-                errorMessage.innerHTML = error.response?.data?.error || 'Sorry, but you look like a robot.'
-
-                forms[i].parentNode.replaceChild(errorMessage, forms[i])
-              }
-            })
-        })
+                  forms[i].parentNode.replaceChild(errorMessage, forms[i])
+                }
+              })
+          })
+      }
     })
+  }
+
+  // Attach the reCAPTCHA token and action to each form.
+  function attachRecaptchaToForms() {
+    const forms = document.querySelectorAll('form:not(.nocaptcha)')
+
+    for (let i = 0; i < forms.length; ++i) {
+      grecaptcha.execute(window.recaptchaV3.siteKey, {action: 'formsubmission/' + window.recaptchaV3.action})
+        .then(function(token) {
+
+          const tokenInput = document.createElement('input')
+          tokenInput.type = 'hidden'
+          tokenInput.name = 'captcha_token'
+          tokenInput.value = token
+          forms[i].appendChild(tokenInput)
+
+          const actionInput = document.createElement('input')
+          actionInput.type = 'hidden'
+          actionInput.name = 'captcha_action'
+          actionInput.value = 'formsubmission/' + window.recaptchaV3.action
+          forms[i].appendChild(actionInput)
+        })
+    }
   }
 }

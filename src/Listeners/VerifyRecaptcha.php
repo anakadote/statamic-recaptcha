@@ -20,15 +20,15 @@ class VerifyRecaptcha
     {
         // Is the form excluded from validation?
         if (in_array($event->submission->form->handle(), config('recaptcha.exclusions', []))) {
-            return true;
+            return;
         }
 
         switch (config('recaptcha.recaptcha_version')) {
 
             // v3
             case 3:
-                $token = request()->captcha_token;
-                $action = request()->captcha_action;
+                $token = request()->input('captcha_token');
+                $action = request()->input('captcha_action');
 
                 if (! RecaptchaV3::verify($token, $action, config('recaptcha.recaptcha_v3.threshold'))) {
                     throw ValidationException::withMessages([config('recaptcha.recaptcha_v3.error_message')]);
