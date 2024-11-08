@@ -1,6 +1,8 @@
 <?php
 
 namespace Anakadote\StatamicRecaptcha\Services;
+
+use Illuminate\Support\Facades\Log;
     
 class RecaptchaV3
 {
@@ -32,14 +34,16 @@ class RecaptchaV3
 
         $result = json_decode($output);
 
-        if (! $result || ! $result->success) {
-            return false;
-        }
-
         if (
+            ! $result || 
+            ! $result->success || 
             $result->score < $threshold || 
-            $result->action != $action
+            $result->action !== $action
         ) {
+            if (config('recaptcha.log_failures', true)) {
+                Log::info('reCAPTCHA v3 verification failure.', ['response' => json_decode($output, true)]);
+            }
+
             return false;
         }
 

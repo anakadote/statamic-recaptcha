@@ -1,6 +1,8 @@
 <?php
 
 namespace Anakadote\StatamicRecaptcha\Services;
+
+use Illuminate\Support\Facades\Log;
     
 class RecaptchaV2
 {
@@ -30,6 +32,10 @@ class RecaptchaV2
 
         if ($result->success) {
             return true;
+        }
+
+        if (config('recaptcha.log_failures', true)) {
+            Log::info('reCAPTCHA v2 verification failure.', ['response' => json_decode($output, true)]);
         }
 
         return false;

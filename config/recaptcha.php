@@ -7,7 +7,7 @@ return [
     | reCAPTCHA Version
     |--------------------------------------------------------------------------
     |
-    | Set your version of reCAPTCHA here, either "3" or "2".
+    | Set your version of reCAPTCHA here, either `3` or `2`.
     |
     */
     'recaptcha_version' => 3,
@@ -37,8 +37,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | The default is the checkbox captcha, for which you can set the size to 
-    | either "normal" or "compact." To enable the invisible reCAPTCHA, set the 
-    | size to "invisible".
+    | either `normal` or `compact`. To enable the invisible reCAPTCHA, set the 
+    | size to `invisible`.
     |
     */
     'recaptcha_v2' => [
@@ -50,6 +50,17 @@ return [
         'error_message' => 'You did not prove that you are not a robot.',
         'terms' => 'This website has implemented reCAPTCHA v2 and your use of reCAPTCHA v2 is subject to the <a href="https://www.google.com/policies/privacy/" target="_blank">Google Privacy Policy</a> and <a href="https://www.google.com/policies/terms/" target="_blank">Terms of Use</a>.',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Logging
+    |--------------------------------------------------------------------------
+    |
+    | Set this option to `true` to have all reCAPTCHA verification failures
+    | saved to the logs.
+    |
+    */
+    'log_failures' => true,
 
     /*
     |--------------------------------------------------------------------------
