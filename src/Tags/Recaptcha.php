@@ -56,6 +56,15 @@ class Recaptcha extends Tags
         $action = e(str_replace('-', '_', request()->path()));
         $verifyOnPageLoad = config('recaptcha.recaptcha_v3.verify_on_page_load', true) ? 'true' : 'false';
 
+        $actionLength = config('recaptcha.recaptcha_v3.action_length');
+        if (strlen($action) > $actionLength) {
+            $action = match (config('recaptcha.recaptcha_v3.action_shaver_type')) {
+                'crop' => substr($action, 0, $actionLength),
+                'md5' => md5($action),
+                default => $action,
+            };
+        }
+
         return <<<SCRIPT
             <script type="text/javascript">
               window.recaptchaV3 = {};
