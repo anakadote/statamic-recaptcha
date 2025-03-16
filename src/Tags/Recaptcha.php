@@ -76,6 +76,7 @@ class Recaptcha extends Tags
         $theme = config('recaptcha.recaptcha_v2.theme');
         $size = config('recaptcha.recaptcha_v2.size');
         $tabindex = config('recaptcha.recaptcha_v2.tabindex');
+        $lang = config('recaptcha.recaptcha_v2.lang') ? "'" . config('recaptcha.recaptcha_v2.lang') . "'" : 'null';
 
         // Invisible
         if ($size == 'invisible') {
@@ -97,6 +98,7 @@ class Recaptcha extends Tags
                   window.recaptchaV2.theme = '{$theme}';
                   window.recaptchaV2.size = '{$size}';
                   window.recaptchaV2.tabindex = {$tabindex};
+                  window.recaptchaV2.lang = {$lang};
                 </script>
                 <script src="/vendor/statamic-recaptcha/js/recaptcha-v2.js"></script>
             SCRIPT;

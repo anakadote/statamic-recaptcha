@@ -47,6 +47,7 @@ return [
         'size' => 'normal', // "normal", "compact", or "invisible"
         'theme' => 'light', // "light" or "dark"
         'tabindex' => 0,
+        'lang' => null, // Optional language code from https://developers.google.com/recaptcha/docs/language
         'error_message' => 'You did not prove that you are not a robot.',
         'terms' => 'This website has implemented reCAPTCHA v2 and your use of reCAPTCHA v2 is subject to the <a href="https://www.google.com/policies/privacy/" target="_blank">Google Privacy Policy</a> and <a href="https://www.google.com/policies/terms/" target="_blank">Terms of Use</a>.',
     ],
