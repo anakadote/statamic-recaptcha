@@ -53,17 +53,8 @@ class Recaptcha extends Tags
     protected function v3()
     {
         $siteKey = config('recaptcha.recaptcha_v3.site_key');
-        $action = e(str_replace('-', '_', request()->path()));
+        $action = e(substr(str_replace('-', '_', request()->path()), 0, 85));
         $verifyOnPageLoad = config('recaptcha.recaptcha_v3.verify_on_page_load', true) ? 'true' : 'false';
-
-        $actionLength = config('recaptcha.recaptcha_v3.action_length', 85);
-        if (strlen($action) > $actionLength) {
-            $action = match (config('recaptcha.recaptcha_v3.action_shaver_type', 'crop')) {
-                'crop' => substr($action, 0, $actionLength),
-                'md5' => md5($action),
-                default => $action,
-            };
-        }
 
         return <<<SCRIPT
             <script type="text/javascript">
