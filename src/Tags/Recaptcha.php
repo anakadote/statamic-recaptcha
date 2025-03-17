@@ -53,7 +53,7 @@ class Recaptcha extends Tags
     protected function v3()
     {
         $siteKey = config('recaptcha.recaptcha_v3.site_key');
-        $action = e(str_replace('-', '_', request()->path()));
+        $action = e(substr(str_replace('-', '_', request()->path()), 0, 85));
         $verifyOnPageLoad = config('recaptcha.recaptcha_v3.verify_on_page_load', true) ? 'true' : 'false';
 
         return <<<SCRIPT
