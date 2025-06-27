@@ -21,8 +21,6 @@ return [
         'site_key' => env('RECAPTCHA_V3_SITE_KEY'),
         'secret_key' => env('RECAPTCHA_V3_SECRET_KEY'),
         'threshold' => env('RECAPTCHA_V3_THRESHOLD', .5),
-        'error_message' => 'Sorry, but you look like a robot.',
-        'terms' => 'This website has implemented reCAPTCHA v3 and your use of reCAPTCHA v3 is subject to the <a href="https://www.google.com/policies/privacy/" target="_blank">Google Privacy Policy</a> and <a href="https://www.google.com/policies/terms/" target="_blank">Terms of Use</a>.',
 
         // In addition to performing the captcha verification when a form is submitted,
         // Statamic reCAPTCHA for v3 also runs on page load, and if it is determined
@@ -47,9 +45,7 @@ return [
         'size' => 'normal', // "normal", "compact", or "invisible"
         'theme' => 'light', // "light" or "dark"
         'tabindex' => 0,
-        'lang' => null, // Optional language code from https://developers.google.com/recaptcha/docs/language
-        'error_message' => 'You did not prove that you are not a robot.',
-        'terms' => 'This website has implemented reCAPTCHA v2 and your use of reCAPTCHA v2 is subject to the <a href="https://www.google.com/policies/privacy/" target="_blank">Google Privacy Policy</a> and <a href="https://www.google.com/policies/terms/" target="_blank">Terms of Use</a>.',
+        'lang' => env('APP_LOCALE', 'en'), // Optional language code from https://developers.google.com/recaptcha/docs/language
     ],
 
     /*

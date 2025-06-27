@@ -104,3 +104,21 @@ To **exclude** a form from reCAPTCHA validation, add the CSS class "nocaptcha" t
     'contact_us',
 ],
 ```
+
+## Localization
+
+You can add new language translations, or override this package’s existing translations, by creating a language file at:
+
+`lang/vendor/recaptcha/{locale}/recaptcha.php`
+
+For example, to create new Swedish language translations, create a new file at `lang/vendor/recaptcha/sv/recaptcha.php` with the strings you want to translate. For example:
+
+```
+<?php
+
+    return [
+        'recaptcha_v3_terms' => 'Denna webbplats har implementerat reCAPTCHA v3 och din användning av reCAPTCHA v3 omfattas av <a href="https://www.google.com/policies/privacy/" target="_blank">Googles sekretesspolicy</a> och <a href="https://www.google.com/policies/terms/" target="_blank">användarvillkoren</a>.',
+    ];
+```
+
+See https://laravel.com/docs/12.x/localization#overriding-package-language-files for more information.

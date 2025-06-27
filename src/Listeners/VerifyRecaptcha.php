@@ -12,11 +12,9 @@ class VerifyRecaptcha
     /**
      * Verify a reCAPTCHA token when a form is submitted.
      *
-     * @param  \Statamic\Events\FormSubmitted  $event
      * @throws \Illuminate\Validation\ValidationException
-     * @return void
      */
-    public function handle(FormSubmitted $event)
+    public function handle(FormSubmitted $event): void
     {
         // Is the form excluded from validation?
         if (in_array($event->submission->form->handle(), config('recaptcha.exclusions', []))) {
@@ -31,7 +29,7 @@ class VerifyRecaptcha
                 $action = request()->input('captcha_action');
 
                 if (! RecaptchaV3::verify($token, $action, config('recaptcha.recaptcha_v3.threshold'))) {
-                    throw ValidationException::withMessages([config('recaptcha.recaptcha_v3.error_message')]);
+                    throw ValidationException::withMessages([__('recaptcha::recaptcha.recaptcha_v3_error_message')]);
                 }
                 break;
 
@@ -40,7 +38,7 @@ class VerifyRecaptcha
                 $response = request()->input('g-recaptcha-response');
 
                 if (! RecaptchaV2::verify($response)) {
-                    throw ValidationException::withMessages([config('recaptcha.recaptcha_v2.error_message')]);
+                    throw ValidationException::withMessages([__('recaptcha::recaptcha.recaptcha_v2_error_message')]);
                 }
                 break;
 

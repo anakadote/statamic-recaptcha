@@ -2,8 +2,8 @@ if (window.recaptchaV2) {
 
   // Check for reCAPTCHA config.
   if (
-    window.recaptchaV2.siteKey == 'undefined' ||
-    window.recaptchaV2.siteKey == ''
+    typeof window.recaptchaV2.siteKey === 'undefined' ||
+    window.recaptchaV2.siteKey === ''
   ) {
     console.warn('A RECAPTCHA_V2_SITE_KEY has not been set in .env')
   }
@@ -16,7 +16,7 @@ if (window.recaptchaV2) {
   recaptchaScript.setAttribute('defer', true)
 
   // Build the URL.
-  recaptchaScript.src = (function() {
+  recaptchaScript.src = (() => {
     const baseUrl = 'https://www.google.com/recaptcha/api.js'
     let params = {
       onload: 'onloadRecaptchaCallback',
@@ -35,42 +35,53 @@ if (window.recaptchaV2) {
     return url.toString()
   })()
 
-  // reCAPTCHA is ready.
-  function onloadRecaptchaCallback() {
+  /**
+   * reCAPTCHA is ready.
+   */
+  window.onloadRecaptchaCallback = function() {
+    if (typeof grecaptcha === 'undefined') {
+      console.error('grecaptcha not loaded.')
+      return
+    }
+
     const forms = document.querySelectorAll('form:not(.nocaptcha)')
 
-    for (let i = 0; i < forms.length; i++) {
+    forms.forEach(form => {
 
       // Invisible
       if (window.recaptchaV2.size == 'invisible') {
-        if (forms[i].querySelector('button[type="submit"]')) {
-          grecaptcha.render(forms[i].querySelector('button[type="submit"]'), {
+        const submitButton = form.querySelector('button[type="submit"]')
+
+        if (submitButton) {
+          grecaptcha.render(submitButton, {
             sitekey: window.recaptchaV2.siteKey,
             size: 'invisible',
-            callback: function(token) {
-              forms[i].querySelector('button[type="submit"]').disabled = true
+            callback: (token) => {
+              submitButton.disabled = true
 
               const tokenInput = document.createElement('input')
               tokenInput.type = 'hidden'
               tokenInput.name = 'g-recaptcha-response'
               tokenInput.value = token
-              forms[i].appendChild(tokenInput)
-              forms[i].submit()
+              form.appendChild(tokenInput)
+              form.submit()
             }
           })
         }
 
       // Checkbox
       } else {
-        if (forms[i].querySelector('.g-recaptcha')) {
-          grecaptcha.render(forms[i].querySelector('.g-recaptcha'), {
+        const recaptchaEl = form.querySelector('.g-recaptcha')
+
+        if (recaptchaEl) {
+          grecaptcha.render(recaptchaEl, {
             sitekey: window.recaptchaV2.siteKey,
             theme: window.recaptchaV2.theme || 'light',
             size: window.recaptchaV2.size || 'normal',
-            tabindex: window.recaptchaV2.tabindex || 0
+            tabindex: window.recaptchaV2.tabindex || 0,
           })
         }
       }
-    }
+    })
   }
 }

@@ -3,18 +3,13 @@
 namespace Anakadote\StatamicRecaptcha\Services;
 
 use Illuminate\Support\Facades\Log;
-    
+
 class RecaptchaV3
 {
     /**
      * Verify reCAPTCHA v3.
-     *
-     * @param  string  $token      reCAPTCHA token
-     * @param  string  $action     reCAPTCHA action
-     * @param  float   $threshold  Minimum reCAPTCHA score
-     * @return bool
      */
-    public static function verify($token, $action, $threshold = .5)
+    public static function verify(string $token, string $action, float $threshold = .5): bool
     {
         $threshold = $threshold ?? .5; // In case null is provided for the threshold.
 

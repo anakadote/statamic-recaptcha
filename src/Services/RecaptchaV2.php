@@ -3,16 +3,13 @@
 namespace Anakadote\StatamicRecaptcha\Services;
 
 use Illuminate\Support\Facades\Log;
-    
+
 class RecaptchaV2
 {
     /**
      * Verify reCAPTCHA v2.
-     *
-     * @param  string  $response  reCAPTCHA response
-     * @return bool
      */
-    public static function verify($response)
+    public static function verify(?string $response): bool
     {
         $args = [
             'secret'   => config('recaptcha.recaptcha_v2.secret_key'),

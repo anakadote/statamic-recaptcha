@@ -10,7 +10,7 @@ class Recaptcha extends Tags
     /**
      * Script tag for footer.
      */
-    public function index()
+    public function index(): string
     {
         $version = config('recaptcha.recaptcha_version');
 
@@ -28,7 +28,7 @@ class Recaptcha extends Tags
     /**
      * v2 captcha checkbox to place in forms.
      */
-    public function checkbox()
+    public function checkbox(): string
     {
         $siteKey = config('recaptcha.recaptcha_v2.site_key');
 
@@ -40,17 +40,17 @@ class Recaptcha extends Tags
     /**
      * Google reCAPTCHA Terms of Service text.
      */
-    public function terms()
+    public function terms(): string
     {
         $version = config('recaptcha.recaptcha_version');
 
-        return config('recaptcha.recaptcha_v' . $version . '.terms');
+        return __('recaptcha::recaptcha.recaptcha_v' . $version . '_terms');
     }
 
     /**
      * v3 script tag for footer.
      */
-    protected function v3()
+    protected function v3(): string
     {
         $siteKey = config('recaptcha.recaptcha_v3.site_key');
         $action = e(substr(str_replace('-', '_', request()->path()), 0, 85));
@@ -70,7 +70,7 @@ class Recaptcha extends Tags
     /**
      * v2 script tag for footer.
      */
-    protected function v2()
+    protected function v2(): string
     {
         $siteKey = config('recaptcha.recaptcha_v2.site_key');
         $theme = config('recaptcha.recaptcha_v2.theme');
