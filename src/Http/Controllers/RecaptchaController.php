@@ -10,13 +10,13 @@ use Illuminate\Routing\Controller;
 class RecaptchaController extends Controller
 {
     /**
-     * Verify a reCAPTCHA v3 token and action.
+     * Verify a reCAPTCHA v3 Classic token and action.
      */
     public function verifyV3Token(Request $request): Response
     {
         if (! RecaptchaV3::verify($request->input('token'), $request->input('action'), config('recaptcha.recaptcha_v3.threshold'))) {
             return response([
-                'error' => __('recaptcha::recaptcha.recaptcha_v3_error_message'),
+                'error' => __('recaptcha::recaptcha.recaptcha_error_message'),
             ], 401);
         }
 

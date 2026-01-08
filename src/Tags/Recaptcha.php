@@ -8,21 +8,18 @@ use Statamic\Tags\Tags;
 class Recaptcha extends Tags
 {
     /**
-     * Script tag for footer.
+     * Script tag for the footer.
      */
     public function index(): string
     {
         $version = config('recaptcha.recaptcha_version');
 
-        if ($version == 3) {
-            return $this->v3();
-        }
-
-        if ($version == 2) {
-            return $this->v2();
-        }
-
-        throw new Exception('reCAPTCHA version not set correctly in config/recaptcha.php');
+        return match ($version) {
+            'enterprise' => $this->enterprise(),
+            'v3'         => $this->v3(),
+            'v2'         => $this->v2(),
+            default      => throw new Exception('reCAPTCHA version not set correctly in config/recaptcha.php'),
+        };
     }
 
     /**
@@ -44,7 +41,25 @@ class Recaptcha extends Tags
     {
         $version = config('recaptcha.recaptcha_version');
 
-        return __('recaptcha::recaptcha.recaptcha_v' . $version . '_terms');
+        return __('recaptcha::recaptcha.recaptcha_terms');
+    }
+
+    /**
+     * Enterprise script tag for footer.
+     */
+    protected function enterprise(): string
+    {
+        $siteKey = config('recaptcha.recaptcha_enterprise.site_key');
+        $action = e(substr(str_replace('-', '_', request()->path()), 0, 85));
+
+        return <<<SCRIPT
+            <script type="text/javascript">
+              window.recaptchaEnterprise = {};
+              window.recaptchaEnterprise.siteKey = '{$siteKey}';
+              window.recaptchaEnterprise.action = '{$action}';
+            </script>
+            <script src="/vendor/statamic-recaptcha/js/recaptcha-enterprise.js"></script>
+        SCRIPT;
     }
 
     /**

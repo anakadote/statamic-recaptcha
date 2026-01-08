@@ -2,6 +2,7 @@
 
 namespace Anakadote\StatamicRecaptcha\Listeners;
 
+use Anakadote\StatamicRecaptcha\Services\RecaptchaEnterprise;
 use Anakadote\StatamicRecaptcha\Services\RecaptchaV2;
 use Anakadote\StatamicRecaptcha\Services\RecaptchaV3;
 use Illuminate\Validation\ValidationException;
@@ -23,22 +24,32 @@ class VerifyRecaptcha
 
         switch (config('recaptcha.recaptcha_version')) {
 
+            // Enterprise
+            case 'enterprise':
+                $token = request()->input('captcha_token');
+                $action = request()->input('captcha_action');
+
+                if (! RecaptchaEnterprise::verify($token, $action, config('recaptcha.recaptcha_enterprise.threshold'))) {
+                    throw ValidationException::withMessages([__('recaptcha::recaptcha.recaptcha_error_message')]);
+                }
+                break;
+
             // v3
-            case 3:
+            case 'v3':
                 $token = request()->input('captcha_token');
                 $action = request()->input('captcha_action');
 
                 if (! RecaptchaV3::verify($token, $action, config('recaptcha.recaptcha_v3.threshold'))) {
-                    throw ValidationException::withMessages([__('recaptcha::recaptcha.recaptcha_v3_error_message')]);
+                    throw ValidationException::withMessages([__('recaptcha::recaptcha.recaptcha_error_message')]);
                 }
                 break;
 
             // v2
-            case '2':
+            case 'v2':
                 $response = request()->input('g-recaptcha-response');
 
                 if (! RecaptchaV2::verify($response)) {
-                    throw ValidationException::withMessages([__('recaptcha::recaptcha.recaptcha_v2_error_message')]);
+                    throw ValidationException::withMessages([__('recaptcha::recaptcha.recaptcha_error_message')]);
                 }
                 break;
 

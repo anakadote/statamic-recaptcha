@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 class RecaptchaV3
 {
     /**
-     * Verify reCAPTCHA v3.
+     * Verify reCAPTCHA v3 Classic.
      */
     public static function verify(string $token, string $action, float $threshold = .5): bool
     {

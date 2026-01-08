@@ -15,6 +15,7 @@ class ServiceProvider extends AddonServiceProvider
     ];
 
     protected $scripts = [
+        __DIR__ . '/../resources/js/recaptcha-enterprise.js',
         __DIR__ . '/../resources/js/recaptcha-v3.js',
         __DIR__ . '/../resources/js/recaptcha-v2.js',
     ];
