@@ -3,6 +3,7 @@
 namespace Anakadote\StatamicRecaptcha\Services;
 
 use Exception;
+use Google\Auth\Credentials\ServiceAccountCredentials;
 use Google\Cloud\RecaptchaEnterprise\V1\Assessment;
 use Google\Cloud\RecaptchaEnterprise\V1\Client\RecaptchaEnterpriseServiceClient;
 use Google\Cloud\RecaptchaEnterprise\V1\CreateAssessmentRequest;
@@ -17,7 +18,22 @@ class RecaptchaEnterprise
      */
     public static function verify(string $token, string $action, float $threshold = .5): bool
     {
-        $client = new RecaptchaEnterpriseServiceClient;
+        // Set the explicit path to the service account key file, if set in our config...
+        $credentialsPath = config('recaptcha.recaptcha_enterprise.credentials');
+        if ($credentialsPath) {
+            $credentials = new ServiceAccountCredentials(
+                ['https://www.googleapis.com/auth/cloud-platform'], 
+                config('recaptcha.recaptcha_enterprise.credentials')
+            );
+
+            $client = new RecaptchaEnterpriseServiceClient([
+                'credentials' => $credentials,
+            ]);
+
+        // ...otherwise, let Google auto-find it using the `GOOGLE_APPLICATION_CREDENTIALS` .env value.
+        } else {
+            $client = new RecaptchaEnterpriseServiceClient;
+        }
 
         $event = (new Event)
             ->setSiteKey(config('recaptcha.recaptcha_enterprise.site_key'))

@@ -24,6 +24,7 @@ return [
         'project_id' => env('RECAPTCHA_ENTERPRISE_PROJECT_ID'), // The Google Cloud project ID
         'site_key' => env('RECAPTCHA_ENTERPRISE_SITE_KEY'),     // The key ID for the reCAPTCHA key (See https://cloud.google.com/recaptcha/docs/create-key)
         'threshold' => env('RECAPTCHA_ENTERPRISE_THRESHOLD', .5),
+        'credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
     ],
 
     /*

@@ -8,7 +8,7 @@
         }  
     ],
     "require": {
-        "google/cloud-recaptcha-enterprise": "^2.2"
+        "google/cloud-recaptcha-enterprise": "^2.3.0"
     },
     "autoload": {
         "psr-4": {
