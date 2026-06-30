@@ -8,6 +8,7 @@
         }  
     ],
     "require": {
+        "php": "^8.1",
         "google/cloud-recaptcha-enterprise": "^2.3.0"
     },
     "autoload": {
