@@ -14,15 +14,33 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Enterprise configuration
+    | Enterprise / Fraud Defense configuration
     |
-    | You must also have a "GOOGLE_APPLICATION_CREDENTIALS" variable in .env 
+    | You must also have a "GOOGLE_APPLICATION_CREDENTIALS" variable in .env
     | that points to the service account JSON key file within your file system.
-    |--------------------------------------------------------------------------
+    |
+    | Prerequisite: create your SITE KEY at Security > Fraud Defense > Create key.
+    | That is the public key for your frontend JavaScript — a different thing
+    | from the service account JSON key created below.
+    |
+    | Steps to create the JSON key file from your Google Cloud console at
+    | https://console.cloud.google.com:
+    |
+    | 1. Select the project that owns the site key. Copy its project ID
+    |    (lowercase string, not the display name or numeric project number).
+    | 2. APIs & Services > Library > "reCAPTCHA Enterprise API" > Enable.
+    | 3. IAM & Admin > Service Accounts > Create service account. This opens a
+    |    three-pane wizard.
+    | 4. On the wizard's second pane, grant the role "reCAPTCHA Enterprise
+    |    Agent" (roles/recaptchaenterprise.agent). Nothing broader. Leave the
+    |    third pane blank and click Done.
+    | 5. Open the account > Keys tab > Add key > Create new key > JSON.
+    |    Downloads once; Google keeps no copy. Check its project_id matches.
+    | 6. Store outside the webroot, chmod 600, gitignore.
     */
     'recaptcha_enterprise' => [
-        'project_id' => env('RECAPTCHA_ENTERPRISE_PROJECT_ID'), // The Google Cloud project ID
-        'site_key' => env('RECAPTCHA_ENTERPRISE_SITE_KEY'),     // The key ID for the reCAPTCHA key (See https://cloud.google.com/recaptcha/docs/create-key)
+        'project_id' => env('RECAPTCHA_ENTERPRISE_PROJECT_ID'),
+        'site_key' => env('RECAPTCHA_ENTERPRISE_SITE_KEY'),
         'threshold' => env('RECAPTCHA_ENTERPRISE_THRESHOLD', .5),
         'credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
     ],

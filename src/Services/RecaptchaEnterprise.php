@@ -18,38 +18,39 @@ class RecaptchaEnterprise
      */
     public static function verify(string $token, string $action, float $threshold = .5): bool
     {
-        // Set the explicit path to the service account key file, if set in our config...
-        $credentialsPath = config('recaptcha.recaptcha_enterprise.credentials');
-        if ($credentialsPath) {
-            $credentials = new ServiceAccountCredentials(
-                ['https://www.googleapis.com/auth/cloud-platform'], 
-                config('recaptcha.recaptcha_enterprise.credentials')
-            );
-
-            $client = new RecaptchaEnterpriseServiceClient([
-                'credentials' => $credentials,
-            ]);
-
-        // ...otherwise, let Google auto-find it using the `GOOGLE_APPLICATION_CREDENTIALS` .env value.
-        } else {
-            $client = new RecaptchaEnterpriseServiceClient;
-        }
-
-        $event = (new Event)
-            ->setSiteKey(config('recaptcha.recaptcha_enterprise.site_key'))
-            ->setToken($token)
-            ->setExpectedAction($action);
-
-        $assessment = (new Assessment)
-            ->setEvent($event);
-
-        $projectId = config('recaptcha.recaptcha_enterprise.project_id');
-
-        $request = (new CreateAssessmentRequest)
-            ->setParent("projects/{$projectId}")
-            ->setAssessment($assessment);
-
         try {
+
+            // Set the explicit path to the service account key file, if set in our config...
+            $credentialsPath = config('recaptcha.recaptcha_enterprise.credentials');
+            if ($credentialsPath) {
+                $credentials = new ServiceAccountCredentials(
+                    ['https://www.googleapis.com/auth/cloud-platform'], 
+                    config('recaptcha.recaptcha_enterprise.credentials')
+                );
+
+                $client = new RecaptchaEnterpriseServiceClient([
+                    'credentials' => $credentials,
+                ]);
+
+            // ...otherwise, let Google auto-find it using the `GOOGLE_APPLICATION_CREDENTIALS` .env value.
+            } else {
+                $client = new RecaptchaEnterpriseServiceClient;
+            }
+
+            $event = (new Event)
+                ->setSiteKey(config('recaptcha.recaptcha_enterprise.site_key'))
+                ->setToken($token)
+                ->setExpectedAction($action);
+
+            $assessment = (new Assessment)
+                ->setEvent($event);
+
+            $projectId = config('recaptcha.recaptcha_enterprise.project_id');
+
+            $request = (new CreateAssessmentRequest)
+                ->setParent("projects/{$projectId}")
+                ->setAssessment($assessment);
+
             $response = $client->createAssessment($request);
 
             // Check token validity.
