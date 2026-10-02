@@ -39,8 +39,6 @@ class Recaptcha extends Tags
      */
     public function terms(): string
     {
-        $version = config('recaptcha.recaptcha_version');
-
         return __('recaptcha::recaptcha.recaptcha_terms');
     }
 
@@ -50,7 +48,7 @@ class Recaptcha extends Tags
     protected function enterprise(): string
     {
         $siteKey = config('recaptcha.recaptcha_enterprise.site_key');
-        $action = e(substr(str_replace('-', '_', request()->path()), 0, 85));
+        $action = $this->action();
 
         return <<<SCRIPT
             <script type="text/javascript">
@@ -68,7 +66,7 @@ class Recaptcha extends Tags
     protected function v3(): string
     {
         $siteKey = config('recaptcha.recaptcha_v3.site_key');
-        $action = e(substr(str_replace('-', '_', request()->path()), 0, 85));
+        $action = $this->action();
         $verifyOnPageLoad = config('recaptcha.recaptcha_v3.verify_on_page_load', true) ? 'true' : 'false';
 
         return <<<SCRIPT
@@ -118,5 +116,13 @@ class Recaptcha extends Tags
                 <script src="/vendor/statamic-recaptcha/js/recaptcha-v2.js"></script>
             SCRIPT;
         }
+    }
+
+    /**
+     * Generate the action string for reCAPTCHA v3.
+     */
+    private function action(): string
+    {
+        return substr(preg_replace('/[^A-Za-z\/_]/', '', str_replace('-', '_', request()->path())), 0, 85);
     }
 }
